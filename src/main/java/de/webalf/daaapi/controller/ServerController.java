@@ -32,7 +32,7 @@ public class ServerController {
 
 	@GetMapping(produces = TEXT_PLAIN_VALUE)
 	@ApiResponses({
-			@ApiResponse(code = 200, message = "", response = String.class, examples = @Example(@ExampleProperty(value = "arma.deutsche-arma-allianz.de:2302:GanzSicheresPasswort", mediaType = TEXT_PLAIN_VALUE))),
+			@ApiResponse(code = 200, message = "serverIp:port:password", response = String.class, examples = @Example(@ExampleProperty(value = "arma.deutsche-arma-allianz.de:2302:GanzSicheresPasswort", mediaType = TEXT_PLAIN_VALUE))),
 			@ApiResponse(code = 400, message = "No next server url configured.")
 	})
 	public String getServerConfig() {

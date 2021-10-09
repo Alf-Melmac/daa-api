@@ -34,7 +34,7 @@ public class SpringFoxConfig {
 				.apis(RequestHandlerSelectors.any())
 				.paths(PathSelectors.ant(API + "/**"))
 				.build()
-				.apiInfo(new ApiInfo("DAA Web API", "API für die Deutsche Arma Allianz", "v1", "urn:tos", new Contact("Alf", "https://webalf.de", "daa-api@webalf.de"), "", "", new ArrayList<>()))
+				.apiInfo(new ApiInfo("DAA Web API", "API für die Deutsche Arma Allianz", "v1", "urn:tos", new Contact("Alf", "https://webalf.de", "daa-api@webalf.de"), "Attribution-NonCommercial 4.0 International", "https://raw.githubusercontent.com/Alf-Melmac/daa-api/master/LICENSE", new ArrayList<>()))
 				.useDefaultResponseMessages(false)
 				.securitySchemes(List.of(new ApiKey(authTokenName, "daa-api.auth.token", "header")))
 				.securityContexts(List.of(
