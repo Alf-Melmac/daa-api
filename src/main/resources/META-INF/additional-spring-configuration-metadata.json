@@ -1,0 +1,14 @@
+{
+  "properties": [
+	{
+	  "name": "daa-api.auth.token.name",
+	  "type": "java.lang.String",
+	  "description": "Name of the authentication token used to validate requests.",
+	  "defaultValue": "server-manager-auth-token"
+	},
+	{
+	  "name": "daa-api.auth.token",
+	  "type": "java.lang.String",
+	  "description": "The token that should be used to validate requests."
+	}
+  ] }
