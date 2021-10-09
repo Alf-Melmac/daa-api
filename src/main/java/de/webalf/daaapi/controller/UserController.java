@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import static de.webalf.daaapi.controller.Urls.API;
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
+import static org.springframework.http.MediaType.TEXT_PLAIN_VALUE;
 
 /**
  * @author Alf
@@ -21,7 +23,7 @@ import static de.webalf.daaapi.controller.Urls.API;
 public class UserController {
 	private final UserService userService;
 
-	@PutMapping("{userId}")
+	@PutMapping(value = "{userId}", consumes = TEXT_PLAIN_VALUE, produces = APPLICATION_JSON_VALUE)
 	public UserDto putUserMods(@PathVariable long userId, @RequestBody String mods) {
 		return UserAssembler.toDto(userService.updateModsOrCreateUser(userId, mods));
 	}
