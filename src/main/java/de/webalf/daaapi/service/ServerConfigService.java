@@ -4,14 +4,12 @@ import de.webalf.daaapi.assembler.ServerConfigAssembler;
 import de.webalf.daaapi.exception.BusinessRuntimeException;
 import de.webalf.daaapi.exception.ResourceNotFoundException;
 import de.webalf.daaapi.model.ServerConfig;
-import de.webalf.daaapi.model.dtos.ServerConfigDto;
+import de.webalf.daaapi.model.dtos.ServerConfigPostDto;
 import de.webalf.daaapi.repository.ServerConfigRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Optional;
 
 /**
  * @author Alf
@@ -36,27 +34,15 @@ public class ServerConfigService {
 				});
 	}
 
-	private Optional<ServerConfig> existsByDto(ServerConfigDto dto) {
-		return serverConfigRepository.findByServerIpIgnoreCaseAndPortAndPassword(dto.getServerIp(), dto.getPort(), dto.getPassword());
-	}
-
 	/**
 	 * Creates a new {@link ServerConfig}. If a config with same values already exists the existing config is returned.
 	 *
 	 * @param serverConfig to create
 	 * @return created server config
 	 */
-	public ServerConfig createServerConfig(ServerConfigDto serverConfig) {
-		final Optional<ServerConfig> existingServerConfig = existsByDto(serverConfig);
-		if (existingServerConfig.isPresent()) {
-			return existingServerConfig.get();
-		}
-
-		if (serverConfigRepository.existsById(serverConfig.getId())) {
-			throw BusinessRuntimeException.builder().title("This server config id is already taken.").build();
-		}
-
-		return serverConfigRepository.save(ServerConfigAssembler.fromDto(serverConfig));
+	public ServerConfig createServerConfig(ServerConfigPostDto serverConfig) {
+		return serverConfigRepository.findByServerIpIgnoreCaseAndPortAndPassword(serverConfig.getServerIp(), serverConfig.getPort(), serverConfig.getPassword())
+				.orElseGet(() -> serverConfigRepository.save(ServerConfigAssembler.fromDto(serverConfig)));
 	}
 
 	/**

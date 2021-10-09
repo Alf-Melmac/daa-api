@@ -8,5 +8,5 @@ import lombok.Value;
  */
 @Value
 public class Urls {
-	static final String API = "/api/v1";
+	public static final String API = "/api/v1";
 }

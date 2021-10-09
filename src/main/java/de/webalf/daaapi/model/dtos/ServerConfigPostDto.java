@@ -1,9 +1,10 @@
 package de.webalf.daaapi.model.dtos;
 
 import io.swagger.annotations.ApiModelProperty;
-import lombok.EqualsAndHashCode;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.RequiredArgsConstructor;
 import lombok.Value;
-import lombok.experimental.SuperBuilder;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
@@ -12,10 +13,10 @@ import javax.validation.constraints.NotBlank;
  * @author Alf
  * @since 09.10.2021
  */
-@EqualsAndHashCode(callSuper = true)
+@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 @Value
-@SuperBuilder
-public class ServerConfigDto extends AbstractIdEntityDto {
+@Builder
+public class ServerConfigPostDto {
 	@NotBlank
 	@ApiModelProperty(example = "arma.deutsche-arma-allianz.de")
 	String serverIp;

@@ -2,6 +2,7 @@ package de.webalf.daaapi.assembler;
 
 import de.webalf.daaapi.model.ServerConfig;
 import de.webalf.daaapi.model.dtos.ServerConfigDto;
+import de.webalf.daaapi.model.dtos.ServerConfigPostDto;
 import lombok.experimental.UtilityClass;
 
 /**
@@ -10,13 +11,12 @@ import lombok.experimental.UtilityClass;
  */
 @UtilityClass
 public final class ServerConfigAssembler {
-	public static ServerConfig fromDto(ServerConfigDto dto) {
+	public static ServerConfig fromDto(ServerConfigPostDto dto) {
 		if (dto == null) {
 			return null;
 		}
 
 		return ServerConfig.builder()
-				.id(dto.getId())
 				.serverIp(dto.getServerIp())
 				.port(dto.getPort())
 				.password(dto.getPassword())

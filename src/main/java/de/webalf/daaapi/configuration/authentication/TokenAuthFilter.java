@@ -1,5 +1,6 @@
 package de.webalf.daaapi.configuration.authentication;
 
+import lombok.Getter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.lang.NonNull;
 import org.springframework.security.core.Authentication;
@@ -20,6 +21,7 @@ import java.io.IOException;
 @Component
 public class TokenAuthFilter extends OncePerRequestFilter {
 	@Value("${daa-api.auth.token.name:daa-api-auth-token}")
+	@Getter
 	private String authTokenName;
 
 	@Override

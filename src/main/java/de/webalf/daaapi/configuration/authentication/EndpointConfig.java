@@ -23,6 +23,13 @@ public class EndpointConfig extends WebSecurityConfigurerAdapter {
 	private final TokenAuthFilter tokenAuthFilter;
 	private final TokenAuthProvider tokenAuthProvider;
 
+	private static final String[] SWAGGER_WHITELIST = {
+			// -- swagger ui
+			"/swagger-resources/**",
+			"/swagger-ui/**",
+			"/v3/api-docs"
+	};
+
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http
@@ -31,6 +38,7 @@ public class EndpointConfig extends WebSecurityConfigurerAdapter {
 				.and()
 
 				.authorizeRequests()
+				.antMatchers(SWAGGER_WHITELIST).permitAll()
 
 				// all other requests must be authenticated
 				.anyRequest().fullyAuthenticated()
