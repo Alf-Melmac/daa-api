@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 /**
  * @author Alf
  * @since 09.10.2021
@@ -20,6 +22,10 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 public class ServerConfigService {
 	private final ServerConfigRepository serverConfigRepository;
+
+	public List<ServerConfig> findAll() {
+		return serverConfigRepository.findAll();
+	}
 
 	/**
 	 * Returns the string representation of the {@link ServerConfig} marked as next ({@link ServerConfig#isNext()})

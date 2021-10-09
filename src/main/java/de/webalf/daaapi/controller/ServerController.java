@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 import static de.webalf.daaapi.controller.Urls.API;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
@@ -38,6 +39,12 @@ public class ServerController {
 	public String getServerConfig() {
 		log.trace("getServerConfig");
 		return serverConfigService.getCurrentServer();
+	}
+
+	@GetMapping(path = "/all", produces = APPLICATION_JSON_VALUE)
+	public List<ServerConfigDto> getServerConfigs() {
+		log.trace("getServerConfigs");
+		return ServerConfigAssembler.toDtoList(serverConfigService.findAll());
 	}
 
 	@PostMapping(consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)

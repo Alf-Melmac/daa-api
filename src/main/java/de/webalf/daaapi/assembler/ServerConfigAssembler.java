@@ -5,6 +5,10 @@ import de.webalf.daaapi.model.dtos.ServerConfigDto;
 import de.webalf.daaapi.model.dtos.ServerConfigPostDto;
 import lombok.experimental.UtilityClass;
 
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
+
 /**
  * @author Alf
  * @since 09.10.2021
@@ -30,5 +34,11 @@ public final class ServerConfigAssembler {
 				.port(serverConfig.getPort())
 				.password(serverConfig.getPassword())
 				.build();
+	}
+
+	public static List<ServerConfigDto> toDtoList(Iterable<? extends ServerConfig> serverConfigs) {
+		return StreamSupport.stream(serverConfigs.spliterator(), false)
+				.map(ServerConfigAssembler::toDto)
+				.collect(Collectors.toUnmodifiableList());
 	}
 }

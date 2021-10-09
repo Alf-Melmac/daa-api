@@ -25,6 +25,7 @@ public class UserController {
 
 	@PutMapping(value = "{userId}", consumes = TEXT_PLAIN_VALUE, produces = APPLICATION_JSON_VALUE)
 	public UserDto putUserMods(@PathVariable long userId, @RequestBody String mods) {
+		log.trace("putUserMods");
 		return UserAssembler.toDto(userService.updateModsOrCreateUser(userId, mods));
 	}
 }
