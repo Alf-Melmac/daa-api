@@ -17,13 +17,13 @@ import javax.validation.constraints.NotBlank;
 @SuperBuilder
 public class ServerConfigDto extends AbstractIdEntityDto {
 	@NotBlank
-	@ApiModelProperty(example = "arma.deutsche-arma-allianz.de")
+	@ApiModelProperty(required = true, example = "arma.deutsche-arma-allianz.de", position = 1)
 	String serverIp;
 
 	@Min(value = 0, message = "Negative port is not allowed.")
-	@ApiModelProperty(example = "2302")
+	@ApiModelProperty(required = true, allowableValues = "range[0, infinity]", example = "2302", position = 2)
 	int port;
 
-	@ApiModelProperty(example = "GanzSicheresPasswort")
+	@ApiModelProperty(allowEmptyValue = true, example = "GanzSicheresPasswort", position = 3)
 	String password;
 }
