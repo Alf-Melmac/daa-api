@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.6.3</version>
+		<version>2.6.6</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 
@@ -22,11 +22,11 @@
 		<!--Versions-->
 		<java.version>11</java.version>
 		<!--https://github.com/spring-projects/spring-boot/releases -->
-		<springframework.boot.version>2.6.3</springframework.boot.version>
+		<springframework.boot.version>2.6.6</springframework.boot.version>
 		<!--https://jdbc.postgresql.org/documentation/changelog.html -->
-		<postgresql.version>42.3.3</postgresql.version>
+		<postgresql.version>42.3.4</postgresql.version>
 		<!--https://projectlombok.org/changelog -->
-		<lombok.version>1.18.22</lombok.version>
+		<lombok.version>1.18.24</lombok.version>
 		<javax.validation.version>2.0.1.Final</javax.validation.version>
 		<springfox.version>3.0.0</springfox.version>
 	</properties>
@@ -77,6 +77,7 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-configuration-processor</artifactId>
+			<version>${springframework.boot.version}</version>
 			<optional>true</optional>
 		</dependency>
 		<dependency>
