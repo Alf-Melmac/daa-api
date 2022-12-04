@@ -1,12 +1,12 @@
 package de.webalf.daaapi.controller;
 
-import lombok.Value;
+import lombok.experimental.UtilityClass;
 
 /**
  * @author Alf
  * @since 09.10.2021
  */
-@Value
+@UtilityClass
 public class Urls {
 	public static final String API = "/api/v1";
 }

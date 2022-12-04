@@ -7,6 +7,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
 
 import java.util.Collection;
+import java.util.Collections;
 
 /**
  * @author Alf
@@ -18,7 +19,7 @@ public class DaaApiAuthentication implements Authentication {
 	@Getter
 	private String credentials;
 	@Getter
-	private Collection<? extends GrantedAuthority> authorities;
+	private final Collection<? extends GrantedAuthority> authorities = Collections.emptyList();
 
 	public DaaApiAuthentication(String token) {
 		credentials = token;
@@ -41,7 +42,7 @@ public class DaaApiAuthentication implements Authentication {
 
 	@Override
 	public void setAuthenticated(boolean b) {
-
+		/*no op*/
 	}
 
 	@Override
