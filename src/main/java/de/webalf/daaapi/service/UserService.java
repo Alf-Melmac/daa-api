@@ -2,12 +2,11 @@ package de.webalf.daaapi.service;
 
 import de.webalf.daaapi.model.User;
 import de.webalf.daaapi.repository.UserRepository;
+import jakarta.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import javax.validation.constraints.NotBlank;
 
 /**
  * @author Alf

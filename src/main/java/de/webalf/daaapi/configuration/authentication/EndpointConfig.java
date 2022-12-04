@@ -2,13 +2,13 @@ package de.webalf.daaapi.configuration.authentication;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.Ordered;
-import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 /**
@@ -17,9 +17,8 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
  */
 @Configuration
 @EnableWebSecurity
-@Order(Ordered.HIGHEST_PRECEDENCE)
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
-public class EndpointConfig extends WebSecurityConfigurerAdapter {
+public class EndpointConfig {
 	private final TokenAuthFilter tokenAuthFilter;
 	private final TokenAuthProvider tokenAuthProvider;
 
@@ -30,26 +29,32 @@ public class EndpointConfig extends WebSecurityConfigurerAdapter {
 			"/v3/api-docs/**"
 	};
 
-	@Override
-	protected void configure(HttpSecurity http) throws Exception {
+	@Bean
+	public WebSecurityCustomizer webSecurityCustomizer() {
+		return web -> web.ignoring().requestMatchers(SWAGGER_WHITELIST);
+	}
+
+	@Bean
+	protected SecurityFilterChain configure(HttpSecurity http) throws Exception {
 		http
 				// no session management required
 				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 				.and()
 
-				.authorizeRequests()
-				.antMatchers(SWAGGER_WHITELIST).permitAll()
-
-				// all other requests must be authenticated
-				.anyRequest().fullyAuthenticated()
-				.and()
+				.authorizeHttpRequests(authorize -> authorize
+//						.requestMatchers(SWAGGER_WHITELIST).permitAll()
+								.anyRequest().authenticated()
+				)
 
 				// disable Cross Site Request Forgery token
-				// we do not rely on cookie based auth and are completely stateless so we are safe
+				// we do not rely on cookie based auth and are completely stateless, so we are safe
 				.csrf().disable()
 
 				// authentication for token based authentication
+				//FIXME provider never called and swagger endpoints completely blocked
 				.authenticationProvider(tokenAuthProvider)
 				.addFilterBefore(tokenAuthFilter, BasicAuthenticationFilter.class);
+
+		return http.build();
 	}
 }

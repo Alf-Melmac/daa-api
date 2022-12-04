@@ -1,8 +1,7 @@
 package de.webalf.daaapi.model;
 
+import jakarta.persistence.*;
 import lombok.*;
-
-import javax.persistence.*;
 
 /**
  * @author Alf
