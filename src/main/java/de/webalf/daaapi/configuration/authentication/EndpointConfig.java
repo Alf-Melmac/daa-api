@@ -25,9 +25,9 @@ public class EndpointConfig extends WebSecurityConfigurerAdapter {
 
 	private static final String[] SWAGGER_WHITELIST = {
 			// -- swagger ui
-			"/swagger-resources/**",
 			"/swagger-ui/**",
-			"/v3/api-docs"
+			"/swagger-ui.html",
+			"/v3/api-docs/**"
 	};
 
 	@Override

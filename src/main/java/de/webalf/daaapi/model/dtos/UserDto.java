@@ -1,10 +1,12 @@
 package de.webalf.daaapi.model.dtos;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 import lombok.Value;
+
+import static io.swagger.v3.oas.annotations.media.Schema.RequiredMode.REQUIRED;
 
 /**
  * @author Alf
@@ -14,8 +16,8 @@ import lombok.Value;
 @Value
 @Builder
 public class UserDto {
-	@ApiModelProperty(required = true, value = "steam id")
+	@Schema(requiredMode = REQUIRED, name = "steam id")
 	long id;
-	@ApiModelProperty(required = true)
+	@Schema(requiredMode = REQUIRED)
 	String mods;
 }

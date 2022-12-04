@@ -7,7 +7,6 @@ import de.webalf.daaapi.service.ServerConfigService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
-import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -37,16 +36,24 @@ public class ServerController {
 			description = "Retrieves the currently active server configuration.",
 			responses = {
 					@ApiResponse(
-							responseCode = "200",
-							description = "OK",
+							responseCode = "200", description = "OK",
 							content = @Content(
-									mediaType = TEXT_PLAIN_VALUE,
-									schema = @Schema(implementation = String.class),
 									examples = {
 											@ExampleObject(name = "explanation", value = "serverIp:port:password"),
-											@ExampleObject(name = "example", value = "arma.deutsche-arma-allianz.de:2302:GanzSicheresPasswort")
+											@ExampleObject(name = "example", value = "127.0.0.1:2302:GanzSicheresPasswort")
 									})),
-					@ApiResponse(responseCode = "400", description = "No next server url configured.")
+					@ApiResponse(
+							responseCode = "400",
+							description = "No next server url configured.",
+							content = @Content(
+									examples = {
+											@ExampleObject(value = """
+													    {
+													    "errorMessage": "No next server url configured.",
+													    "requestedURI": "/api/v1/server"
+													}""")
+									}
+							))
 			})
 	public String getServerConfig() {
 		log.trace("getServerConfig");
@@ -62,25 +69,18 @@ public class ServerController {
 
 	@PostMapping(consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
 	@Operation(summary = "Post new server config",
-			requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
-					content = @Content(mediaType = APPLICATION_JSON_VALUE, schema = @Schema(implementation = ServerConfigPostDto.class)),
-					required = true
-			),
 			responses = {
+					@ApiResponse(responseCode = "200", description = "OK"),
 					@ApiResponse(
-							responseCode = "200",
-							description = "OK",
+							responseCode = "400",
+							description = "Validation exception",
 							content = @Content(
-									mediaType = APPLICATION_JSON_VALUE,
-									schema = @Schema(implementation = ServerConfigDto.class))),
-					@ApiResponse(responseCode = "400", description = "Validation exception", content = @Content(
-							mediaType = APPLICATION_JSON_VALUE,
-							schema = @Schema(implementation = String.class),
-							examples = @ExampleObject(name = "example", value = "{\n" +
-									"  \"errorMessage\": \"serverIp is invalid. Missing mandatory field?\",\n" +
-									"  \"requestedURI\": \"" + API + "/server\"\n" +
-									"}")
-					))
+									examples = @ExampleObject(value = """
+											{
+											  "errorMessage": "serverIp is invalid. Missing mandatory field?",
+											  "requestedURI": "/api/v1/server"
+											}""")
+							))
 			})
 	public ServerConfigDto postServerConfig(@Valid @RequestBody ServerConfigPostDto serverConfig) {
 		log.trace("postServerConfig");
@@ -90,7 +90,20 @@ public class ServerController {
 	@PutMapping(value = "/{serverConfigId}/active", produces = APPLICATION_JSON_VALUE)
 	@Operation(summary = "Put server config active",
 			description = "Switches the active server configuration to the configuration with the passed ID.",
-			responses = @ApiResponse(responseCode = "404", description = "Resource not found"))
+			responses = {
+					@ApiResponse(responseCode = "200", description = "OK"),
+					@ApiResponse(
+							responseCode = "404",
+							description = "Resource not found",
+							content = @Content(
+									examples = @ExampleObject(value = """
+											{
+											    "timestamp": "2022-01-01T00:00:00.000+00:00",
+											    "status": 404,
+											    "error": "Not Found",
+											    "path": "/api/v1/server/20/active"
+											}""")
+							))})
 	public ServerConfigDto putServerConfigActive(@PathVariable long serverConfigId) {
 		log.trace("putServerConfigActive");
 		return ServerConfigAssembler.toDto(serverConfigService.setNextServerConfig(serverConfigId));
