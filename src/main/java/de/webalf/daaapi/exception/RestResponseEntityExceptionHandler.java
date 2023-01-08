@@ -35,7 +35,7 @@ import java.util.stream.Collectors;
 class RestResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
 
 	@ExceptionHandler(value = {BusinessRuntimeException.class})
-	protected ResponseEntity<?> handleConflict(RuntimeException ex, HttpServletRequest request) {
+	protected ResponseEntity<ExceptionResponse> handleConflict(RuntimeException ex, HttpServletRequest request) {
 		return new ResponseEntity<>(
 				ExceptionResponse.builder()
 						.errorMessage(determineErrorMessage(ex))

@@ -6,7 +6,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
@@ -30,11 +29,6 @@ public class EndpointConfig {
 	};
 
 	@Bean
-	public WebSecurityCustomizer webSecurityCustomizer() {
-		return web -> web.ignoring().requestMatchers(SWAGGER_WHITELIST);
-	}
-
-	@Bean
 	protected SecurityFilterChain configure(HttpSecurity http) throws Exception {
 		http
 				// no session management required
@@ -42,8 +36,8 @@ public class EndpointConfig {
 				.and()
 
 				.authorizeHttpRequests(authorize -> authorize
-//						.requestMatchers(SWAGGER_WHITELIST).permitAll()
-								.anyRequest().authenticated()
+						.requestMatchers(SWAGGER_WHITELIST).permitAll()
+						.anyRequest().authenticated()
 				)
 
 				// disable Cross Site Request Forgery token
@@ -51,7 +45,6 @@ public class EndpointConfig {
 				.csrf().disable()
 
 				// authentication for token based authentication
-				//FIXME provider never called and swagger endpoints completely blocked
 				.authenticationProvider(tokenAuthProvider)
 				.addFilterBefore(tokenAuthFilter, BasicAuthenticationFilter.class);
 

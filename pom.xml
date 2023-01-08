@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.0.0</version>
+		<version>3.0.1</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 
@@ -21,7 +21,7 @@
 
 		<!--Versions-->
 		<java.version>17</java.version>
-		<springdoc-openapi-ui.version>1.6.13</springdoc-openapi-ui.version>
+		<springdoc-openapi-ui.version>2.0.2</springdoc-openapi-ui.version>
 	</properties>
 
 	<dependencies>
@@ -90,8 +90,15 @@
 		<!--Documentation-->
 		<dependency>
 			<groupId>org.springdoc</groupId>
-			<artifactId>springdoc-openapi-ui</artifactId>
+			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
 			<version>${springdoc-openapi-ui.version}</version>
+			<exclusions>
+				<!--Exclude vulnerable dependency (version 1.33)-->
+				<exclusion>
+					<groupId>org.yaml</groupId>
+					<artifactId>snakeyaml</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 	</dependencies>
 
