@@ -5,7 +5,8 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.0.1</version>
+		<!--https://github.com/spring-projects/spring-boot/releases -->
+		<version>3.0.2</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 
@@ -28,6 +29,13 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
+			<exclusions>
+				<!--Exclude vulnerable dependency (version 1.33)-->
+				<exclusion>
+					<groupId>org.yaml</groupId>
+					<artifactId>snakeyaml</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 
 		<!--Security-->

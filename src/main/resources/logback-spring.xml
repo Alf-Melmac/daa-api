@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
 
-	<property name="LOGS" value="./logs" />
+	<property name="LOGS" value="./logs"/>
 
 	<include resource="org/springframework/boot/logging/logback/defaults.xml"/>
 	<appender name="Console" class="ch.qos.logback.core.ConsoleAppender">
@@ -13,7 +13,7 @@
 	<appender name="RollingFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
 		<file>${LOGS}/daa-api.log</file>
 		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
-			<Pattern>${CONSOLE_LOG_PATTERN}</Pattern>
+			<Pattern>${FILE_LOG_PATTERN}</Pattern>
 		</encoder>
 
 		<rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
@@ -25,14 +25,14 @@
 
 	<!-- LOG everything at INFO level -->
 	<root level="info">
-		<appender-ref ref="RollingFile" />
-		<appender-ref ref="Console" />
+		<appender-ref ref="RollingFile"/>
+		<appender-ref ref="Console"/>
 	</root>
 
 	<!-- LOG "de.webalf" at DEBUG level -->
 	<logger name="de.webalf" level="debug" additivity="false">
-		<appender-ref ref="RollingFile" />
-		<appender-ref ref="Console" />
+		<appender-ref ref="RollingFile"/>
+		<appender-ref ref="Console"/>
 	</logger>
 
 </configuration>
