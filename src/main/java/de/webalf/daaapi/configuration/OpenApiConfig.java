@@ -39,7 +39,7 @@ public class OpenApiConfig {
 								.email("daa-api@webalf.de"))
 						.license(new License()
 								.name("MIT License")
-								.url("https://raw.githubusercontent.com/Alf-Melmac/daa-api/master/LICENSE"))
+								.url("https://github.com/Alf-Melmac/daa-api/blob/master/LICENSE"))
 				)
 				.components(new Components()
 						.addSecuritySchemes(SECURITY_SCHEME_KEY, new SecurityScheme().name(authTokenName).type(SecurityScheme.Type.APIKEY).in(HEADER)))

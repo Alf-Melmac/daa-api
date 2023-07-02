@@ -35,9 +35,7 @@ public class ServerConfigService {
 	public String getCurrentServer() {
 		return serverConfigRepository.findByNextIsTrue()
 				.map(ServerConfig::toString)
-				.orElseThrow(() -> {
-					throw BusinessRuntimeException.builder().title("No next server url configured.").build();
-				});
+				.orElseThrow(() -> BusinessRuntimeException.builder().title("No next server url configured.").build());
 	}
 
 	/**
