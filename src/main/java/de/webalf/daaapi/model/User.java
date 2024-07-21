@@ -19,7 +19,7 @@ public class User {
 	//Workaround to ignore generated values
 	private long id;
 
-	@Column(name = "mods")
+	@Column(name = "mods", columnDefinition = "text")
 	@Setter
 	private String mods;
 }
